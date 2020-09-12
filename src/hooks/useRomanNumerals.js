@@ -23,7 +23,7 @@ export const useRomanNumerals = () => {
       const currentValue = numeralsMap[char];
       const nextValue = numeralsMap[chars[index + 1]];
 
-      if (currentValue < nextValue) total -= currentValue;
+      if (currentValue <= nextValue) total -= currentValue;
       else total += currentValue;
     });
 
