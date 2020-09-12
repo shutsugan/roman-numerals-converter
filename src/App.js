@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
-function App() {
+import useRomanNumerals from "./hooks/useRomanNumerals";
+
+import "./App.css";
+
+const App = () => {
+  const [romanNums, setRomanNums] = useState("");
+  const [intNums, setIntNums] = useState("");
+
+  const { fromRoman, toRoman } = useRomanNumerals();
+
+  const handleRomanNumerals = ({ target }) => {
+    const romanValue = target.value;
+    const int = fromRoman(romanValue);
+
+    setRomanNums(romanValue);
+    setIntNums(!isNaN(int) ? parseInt(int) : 0);
+  };
+
+  const handleIntNumbers = ({ target }) => {
+    const intValue = target.value;
+    const num = toRoman(intValue);
+
+    setIntNums(intValue);
+    setRomanNums(num);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app flex flex-col flex-center">
+      <label className="app-label" htmlFor="app-input">
+        Convert from and to Roman numeral
+      </label>
+      <input
+        className="app-input"
+        type="text"
+        value={romanNums}
+        onChange={handleRomanNumerals}
+        placeholder="Roman numerals goes here..."
+      />
+      <input
+        className="app-input"
+        type="number"
+        value={intNums}
+        onChange={handleIntNumbers}
+        placeholder="Integer numbers goes here..."
+      />
     </div>
   );
-}
+};
 
 export default App;
